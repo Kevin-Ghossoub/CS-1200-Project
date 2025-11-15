@@ -1,0 +1,5 @@
+{
+  "name": "CS 1200 project",
+  "description": "An AI-powered health advisor that provides personalized, concrete advice based on user responses to questions about their well-being, lifestyle, and goals.",
+  "requestFramePermissions": []
+}
