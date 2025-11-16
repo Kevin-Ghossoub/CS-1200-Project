@@ -25,13 +25,13 @@ const ProfilePage: React.FC = () => {
     };
 
     return (
-        <Page>
-            <div className="text-center">
-                <img src={userData?.avatar} alt="User Avatar" className="w-24 h-24 rounded-full mx-auto" />
-                <Button variant="secondary" className="mt-4">Edit Profile</Button>
-            </div>
-
+        <Page>    
             <div className="mt-8 space-y-4">
+
+                <div>
+                    <h1 className="text-xl font-bold text-gray-900"> Profile</h1>
+                </div>
+
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Name</label>
                     <input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
