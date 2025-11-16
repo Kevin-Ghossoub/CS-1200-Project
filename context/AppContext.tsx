@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import { UserData, Plan, HistoryItem } from '../types';
 import { useAuth } from './AuthContext';
 
-type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'healthTips' | 'feedback' | 'welcome' | 'login' | 'signup' | 'onboarding' | 'forgotPassword';
+type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'feedback' | 'welcome' | 'login' | 'signup' | 'onboarding' | 'forgotPassword';
 
 interface AppContextType {
   page: Page;
@@ -15,9 +15,6 @@ interface AppContextType {
   addHistoryItem: (item: HistoryItem) => void;
   deleteHistory: () => void;
   activePlan: Plan | null;
-  setActivePlan: (plan: Plan | null) => void;
-  savedPlans: Plan[];
-  saveActivePlan: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -30,7 +27,6 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
   const [userData, setUserDataState] = useState<UserData | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [activePlan, setActivePlan] = useState<Plan | null>(null);
-  const [savedPlans, setSavedPlans] = useState<Plan[]>([]);
   
   const safeJSONParse = (key: string, defaultValue: any) => {
     try {
@@ -47,11 +43,9 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     if (user?.email) {
       setUserDataState(safeJSONParse(`healify_userData_${user.email}`, null));
       setHistory(safeJSONParse(`healify_history_${user.email}`, []));
-      setSavedPlans(safeJSONParse(`healify_savedPlans_${user.email}`, []));
     } else {
       setUserDataState(null);
       setHistory([]);
-      setSavedPlans([]);
     }
   }, [user]);
 
@@ -93,14 +87,6 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     if(user?.email) localStorage.removeItem(`healify_history_${user.email}`);
   }
 
-  const saveActivePlan = () => {
-    if (activePlan) {
-      const newSavedPlans = [...savedPlans, activePlan];
-      setSavedPlans(newSavedPlans);
-      if(user?.email) localStorage.setItem(`healify_savedPlans_${user.email}`, JSON.stringify(newSavedPlans));
-    }
-  };
-
   const value = {
     page,
     setPage,
@@ -112,8 +98,6 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     deleteHistory,
     activePlan,
     setActivePlan,
-    savedPlans,
-    saveActivePlan
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

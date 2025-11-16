@@ -10,7 +10,6 @@ import ProfilePage from './pages/ProfilePage';
 import UserInputPage from './pages/UserInputPage';
 import AIPlanPage from './pages/AIPlanPage';
 import UploadFilePage from './pages/UploadFilePage';
-import HealthTipsPage from './pages/HealthTipsPage';
 import FeedbackPage from './pages/FeedbackPage';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
@@ -37,8 +36,6 @@ const App: React.FC = () => {
         return <AIPlanPage />;
       case 'uploadFile':
         return <UploadFilePage />;
-      case 'healthTips':
-        return <HealthTipsPage />;
       case 'feedback':
         return <FeedbackPage />;
       case 'login':

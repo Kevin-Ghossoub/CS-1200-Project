@@ -22,18 +22,12 @@ const InsightsPage: React.FC = () => {
         return date.toLocaleDateString();
     };
 
-    const handleDeleteAllHistory = () => {
-        if (window.confirm('Are you sure you want to delete your entire prompt history? This action cannot be undone.')) {
-            deleteHistory();
-        }
-    };
-
     return (
         <Page>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-gray-900">Prompt History</h1>
                 {history.length > 0 && (
-                    <Button variant="danger" onClick={handleDeleteAllHistory}>
+                    <Button variant="danger" onClick={deleteHistory}>
                         <TrashIcon className="h-4 w-4 mr-1.5" />
                         Delete all
                     </Button>

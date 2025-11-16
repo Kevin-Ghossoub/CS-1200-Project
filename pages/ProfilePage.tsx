@@ -6,7 +6,7 @@ import { useAppContext } from '../context/AppContext';
 import { useAuth } from '../context/AuthContext';
 
 const ProfilePage: React.FC = () => {
-    const { userData, setUserData, savedPlans } = useAppContext();
+    const { userData, setUserData } = useAppContext();
     const { logout } = useAuth();
     
     // Local state for editing
@@ -49,22 +49,7 @@ const ProfilePage: React.FC = () => {
                     <input type="text" value={goals} onChange={e => setGoals(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g., Improve sleep & daily energy" />
                 </div>
                 <Button fullWidth onClick={handleSaveChanges}>Save Changes</Button>
-            </div>
-
-            <div className="mt-8">
-                <h2 className="text-lg font-semibold text-gray-900">Saved Plans</h2>
-                <div className="mt-4 space-y-3">
-                    {savedPlans.length > 0 ? savedPlans.map(plan => (
-                        <div key={plan.id} className="p-3 bg-white rounded-lg border border-gray-200">
-                           <p className="font-semibold">{plan.title}</p>
-                           <p className="text-sm text-gray-500">Created {plan.createdAt}</p>
-                        </div>
-                    )) : (
-                        <p className="text-sm text-gray-500">No plans saved yet.</p>
-                    )}
-                </div>
-            </div>
-            
+            </div>      
             <div className="mt-8">
                  <Button fullWidth variant="secondary" onClick={logout}>Logout</Button>
             </div>

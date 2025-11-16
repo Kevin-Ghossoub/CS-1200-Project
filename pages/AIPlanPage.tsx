@@ -6,7 +6,7 @@ import Button from '../components/common/Button';
 import { ArrowLeftIcon, SparklesIcon } from '../components/icons';
 
 const AIPlanPage: React.FC = () => {
-    const { setPage, activePlan, saveActivePlan } = useAppContext();
+    const { setPage, activePlan } = useAppContext();
 
     if (!activePlan) {
         return (
@@ -45,9 +45,7 @@ const AIPlanPage: React.FC = () => {
             </div>
 
             <div className="mt-8 space-y-3">
-                <Button fullWidth onClick={saveActivePlan}>Save Plan</Button>
                 <Button fullWidth variant="secondary" onClick={() => setPage('feedback')}>Give Feedback</Button>
-                <Button fullWidth variant="secondary" onClick={() => setPage('healthTips')}>Health Tips</Button>
             </div>
         </div>
     );

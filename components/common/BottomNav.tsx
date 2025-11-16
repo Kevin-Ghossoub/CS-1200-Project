@@ -8,7 +8,7 @@ const BottomNav: React.FC = () => {
 
   const navItems = [
     { name: 'Home', icon: HomeIcon, page: 'home' },
-    { name: 'Insights', icon: BarChartIcon, page: 'insights' },
+    { name: 'History', icon: BarChartIcon, page: 'insights' },
     { name: 'Profile', icon: UserCircleIcon, page: 'profile' },
   ];
 
