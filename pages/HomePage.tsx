@@ -6,7 +6,8 @@ import { HeartIcon } from '../components/icons';
 import { useAppContext } from '../context/AppContext';
 
 const HomePage: React.FC = () => {
-  const { setPage } = useAppContext();
+  const { setPage, userData } = useAppContext();
+  const onboardingComplete = userData && userData.age > 0;
 
   return (
     <Page>
@@ -14,16 +15,17 @@ const HomePage: React.FC = () => {
         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm">
             <HeartIcon className="h-8 w-8" />
         </div>
-        <h1 className="mt-4 text-2xl font-bold text-gray-900">Healify</h1>
+        <h1 className="mt-4 text-2xl font-bold text-gray-900">
+            {onboardingComplete ? `Welcome back, ${userData?.name?.split(' ')[0]}!` : 'Healify'}
+        </h1>
         <p className="mt-1 text-gray-600">Your path to better health.</p>
         <div className="mt-6">
-            <Button onClick={() => setPage('userInput')}>Get Started</Button>
+            {onboardingComplete ? (
+                 <Button onClick={() => setPage('userInput')}>Ask AI</Button>
+            ) : (
+                <Button onClick={() => setPage('onboarding')}>Get Started</Button>
+            )}
         </div>
-      </div>
-      <div className="text-center mt-4">
-        <button onClick={() => setPage('userInput')} className="text-sm font-semibold text-gray-600 hover:text-gray-900">
-            Continue to Main Input Screen
-        </button>
       </div>
     </Page>
   );

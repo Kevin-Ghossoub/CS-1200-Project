@@ -15,6 +15,8 @@ import FeedbackPage from './pages/FeedbackPage';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import OnboardingPage from './pages/OnboardingPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 
 const App: React.FC = () => {
@@ -43,6 +45,10 @@ const App: React.FC = () => {
         return <LoginPage />;
       case 'signup':
         return <SignUpPage />;
+      case 'onboarding':
+        return <OnboardingPage />;
+      case 'forgotPassword':
+        return <ForgotPasswordPage />;
       default:
         return <HomePage />;
     }
@@ -51,11 +57,12 @@ const App: React.FC = () => {
   if (!user) {
      if (page === 'login') return <LoginPage />;
      if (page === 'signup') return <SignUpPage />;
+     if (page === 'forgotPassword') return <ForgotPasswordPage />;
      return <WelcomePage />;
   }
 
   // These pages don't need the main layout with bottom nav
-  if (page === 'aiPlan' || page === 'uploadFile' || page === 'healthTips' || page === 'feedback') {
+  if (page === 'aiPlan' || page === 'uploadFile' || page === 'healthTips' || page === 'feedback' || page === 'onboarding') {
     return <div className="h-screen w-screen bg-gray-50 flex justify-center"><div className="w-full max-w-md">{renderPage()}</div></div>
   }
 

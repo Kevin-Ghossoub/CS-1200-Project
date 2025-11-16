@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import { UserData, Plan, HistoryItem } from '../types';
 import { useAuth } from './AuthContext';
 
-type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'healthTips' | 'feedback' | 'welcome' | 'login' | 'signup';
+type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'healthTips' | 'feedback' | 'welcome' | 'login' | 'signup' | 'onboarding' | 'forgotPassword';
 
 interface AppContextType {
   page: Page;
@@ -42,19 +42,35 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     }
   };
 
+  // Effect for loading/clearing user data based on auth state
   useEffect(() => {
     if (user?.email) {
       setUserDataState(safeJSONParse(`healify_userData_${user.email}`, null));
       setHistory(safeJSONParse(`healify_history_${user.email}`, []));
       setSavedPlans(safeJSONParse(`healify_savedPlans_${user.email}`, []));
-      setPageState('home');
     } else {
-      setPageState('welcome');
       setUserDataState(null);
       setHistory([]);
       setSavedPlans([]);
     }
   }, [user]);
+
+  // Effect for handling navigation based on auth state and current page
+  useEffect(() => {
+    const publicPages: Page[] = ['welcome', 'login', 'signup', 'forgotPassword'];
+    if (user?.email) {
+      // If user is logged in but on a page for unauthenticated users, redirect to home.
+      if (publicPages.includes(page)) {
+        setPageState('home');
+      }
+    } else {
+      // If user is not logged in, but on a protected app page, redirect to welcome.
+      if (!publicPages.includes(page)) {
+        setPageState('welcome');
+      }
+    }
+  }, [user, page]);
+
 
   const setPage = (newPage: Page, state: any = null) => {
     setPageState(newPage);

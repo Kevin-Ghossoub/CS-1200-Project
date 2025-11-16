@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { User, UserData } from '../types';
 
@@ -6,7 +5,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   error: string | null;
-  login: (email: string, pass: string) => Promise<void>;
+  login: (email: string, pass: string) => Promise<boolean>;
   signup: (name: string, email: string, pass: string) => Promise<UserData>;
   logout: () => void;
   resetPassword: (email: string) => Promise<void>;
@@ -32,26 +31,26 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, []);
 
-  const login = async (email: string, pass: string): Promise<void> => {
-    setIsLoading(true);
+  const login = async (email: string, pass: string): Promise<boolean> => {
     setError(null);
-    return new Promise((resolve, reject) => {
+    const trimmedEmail = email.trim();
+    return new Promise((resolve) => {
       setTimeout(() => {
         try {
           const storedUsers = JSON.parse(localStorage.getItem('healify_users') || '{}');
-          if (storedUsers[email] && storedUsers[email].password === pass) {
-            const currentUser = { email };
+          if (storedUsers[trimmedEmail] && storedUsers[trimmedEmail].password === pass) {
+            setIsLoading(true);
+            const currentUser = { email: trimmedEmail };
             localStorage.setItem('healify_currentUser', JSON.stringify(currentUser));
             setUser(currentUser);
             setIsLoading(false);
-            resolve();
+            resolve(true);
           } else {
             throw new Error("Invalid email or password.");
           }
         } catch (e: any) {
           setError(e.message);
-          setIsLoading(false);
-          reject(e);
+          resolve(false);
         }
       }, 1000);
     });
@@ -60,33 +59,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const signup = async (name: string, email: string, pass: string): Promise<UserData> => {
     setIsLoading(true);
     setError(null);
+    const trimmedEmail = email.trim();
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             try {
                 const storedUsers = JSON.parse(localStorage.getItem('healify_users') || '{}');
-                if (storedUsers[email]) {
+                if (storedUsers[trimmedEmail]) {
                     throw new Error("An account with this email already exists.");
                 }
-                const newUsers = { ...storedUsers, [email]: { email, password: pass } };
+                const newUsers = { ...storedUsers, [trimmedEmail]: { email: trimmedEmail, password: pass } };
                 localStorage.setItem('healify_users', JSON.stringify(newUsers));
                 
-                const currentUser = { email };
+                const currentUser = { email: trimmedEmail };
                 localStorage.setItem('healify_currentUser', JSON.stringify(currentUser));
                 setUser(currentUser);
                 
-                // FIX: Update UserData to include all required fields for a new user.
                 const newUserdata: UserData = {
                   name,
-                  email,
+                  email: trimmedEmail,
                   age: 0,
                   gender: '',
                   weight: 0,
                   height: 0,
                   lifestyle: '',
                   goals: '',
-                  avatar: `https://api.dicebear.com/8.x/avataaars/svg?seed=${email}`
+                  avatar: `https://api.dicebear.com/8.x/avataaars/svg?seed=${trimmedEmail}`
                 };
-                localStorage.setItem(`healify_userData_${email}`, JSON.stringify(newUserdata));
+                localStorage.setItem(`healify_userData_${trimmedEmail}`, JSON.stringify(newUserdata));
 
                 setIsLoading(false);
                 resolve(newUserdata);

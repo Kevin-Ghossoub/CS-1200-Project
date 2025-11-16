@@ -1,4 +1,5 @@
 
+
 // FIX: Import Message type.
 import { GoogleGenAI } from "@google/genai";
 import { UserData, FileData, Message } from '../types';
@@ -27,7 +28,8 @@ Here is some information about the user you are talking to:
     const contents = history.map(msg => {
         const role = msg.sender === 'user' ? 'user' : 'model';
         const textPart = { text: msg.text.replace(/<[^>]*>?/gm, '') };
-        const parts = [textPart];
+        // FIX: Explicitly type `parts` to accommodate both text and image data, preventing a TypeScript error.
+        const parts: ({ text: string } | { inlineData: { mimeType: string, data: string } })[] = [textPart];
 
         if (msg.imageUrl) {
             try {

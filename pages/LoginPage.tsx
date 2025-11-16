@@ -13,12 +13,9 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await login(email, password);
-      // AuthContext will trigger App re-render, no need for setPage here
-    } catch (err) {
-      console.error("Login failed:", err);
-    }
+    await login(email, password);
+    // On success, AuthContext sets the user which triggers a redirect in AppContext.
+    // On failure, AuthContext sets an error message which is displayed, and the user stays on this page.
   };
 
   return (
@@ -51,7 +48,14 @@ const LoginPage: React.FC = () => {
         </div>
 
         <div>
-          <label htmlFor="password"className="block text-sm font-medium text-gray-700">Password</label>
+            <div className="flex items-center justify-between">
+                <label htmlFor="password"className="block text-sm font-medium text-gray-700">Password</label>
+                <div className="text-sm">
+                    <button type="button" onClick={() => setPage('forgotPassword')} className="font-medium text-blue-600 hover:text-blue-500">
+                        Forgot password?
+                    </button>
+                </div>
+            </div>
           <div className="mt-1">
             <input
               id="password"

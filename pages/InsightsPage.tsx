@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Page from '../components/common/Page';
 import { useAppContext } from '../context/AppContext';
@@ -23,12 +22,18 @@ const InsightsPage: React.FC = () => {
         return date.toLocaleDateString();
     };
 
+    const handleDeleteAllHistory = () => {
+        if (window.confirm('Are you sure you want to delete your entire prompt history? This action cannot be undone.')) {
+            deleteHistory();
+        }
+    };
+
     return (
         <Page>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold text-gray-900">Prompt History</h1>
                 {history.length > 0 && (
-                    <Button variant="danger" onClick={() => { if(window.confirm('Are you sure you want to delete all data?')) deleteHistory()}}>
+                    <Button variant="danger" onClick={handleDeleteAllHistory}>
                         <TrashIcon className="h-4 w-4 mr-1.5" />
                         Delete all
                     </Button>
