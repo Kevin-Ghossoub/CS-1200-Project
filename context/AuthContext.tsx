@@ -8,7 +8,6 @@ interface AuthContextType {
   login: (email: string, pass: string) => Promise<boolean>;
   signup: (name: string, email: string, pass: string) => Promise<UserData>;
   logout: () => void;
-  resetPassword: (email: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,7 +34,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     setError(null);
     const trimmedEmail = email.trim();
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
         try {
           const storedUsers = JSON.parse(localStorage.getItem('healify_users') || '{}');
@@ -50,8 +49,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           }
         } catch (e: any) {
           setError(e.message);
-          resolve(false);
           setIsLoading(false);
+          reject(e);
         }
       }, 1000);
     });
@@ -105,20 +104,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
   };
   
-  const resetPassword = async (email: string): Promise<void> => {
-      setIsLoading(true);
-      setError(null);
-      return new Promise((resolve) => {
-          setTimeout(() => {
-            console.log(`Password reset link sent to ${email}`);
-            setIsLoading(false);
-            resolve();
-          }, 1000);
-      });
-  };
-
-
-  const value = { user, isLoading, error, login, signup, logout, resetPassword };
+  const value = { user, isLoading, error, login, signup, logout };
 
   return (
     <AuthContext.Provider value={value}>

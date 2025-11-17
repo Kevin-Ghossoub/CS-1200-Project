@@ -1,10 +1,12 @@
 
+
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { UserData, Plan, HistoryItem } from '../types';
 import { useAuth } from './AuthContext';
 
 type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'feedback' | 'welcome' | 'login' | 'signup' | 'onboarding' | 'forgotPassword';
 
+// FIX: Added `setActivePlan` to the context type to allow components to update the active plan.
 interface AppContextType {
   page: Page;
   setPage: (page: Page, state?: any) => void;
@@ -15,6 +17,7 @@ interface AppContextType {
   addHistoryItem: (item: HistoryItem) => void;
   deleteHistory: () => void;
   activePlan: Plan | null;
+  setActivePlan: (plan: Plan | null) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -105,6 +108,7 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     addHistoryItem,
     deleteHistory,
     activePlan,
+    // FIX: Added `setActivePlan` to the context value object.
     setActivePlan,
   };
 
