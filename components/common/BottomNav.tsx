@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { HomeIcon, BarChartIcon, UserCircleIcon } from '../icons';
 import { useAppContext } from '../../context/AppContext';

@@ -83,7 +83,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                   height: 0,
                   lifestyle: '',
                   goals: '',
-                  avatar: `https://api.dicebear.com/8.x/avataaars/svg?seed=${trimmedEmail}`
                 };
                 localStorage.setItem(`healify_userData_${trimmedEmail}`, JSON.stringify(newUserdata));
 

@@ -1,5 +1,3 @@
-
-// FIX: Add Message interface to be used in chat components.
 export interface Message {
   id: string;
   text: string;
@@ -11,7 +9,6 @@ export interface User {
   email: string;
 }
 
-// FIX: Update UserData to include all fields from onboarding and profile.
 export interface UserData {
   name: string;
   email: string;
@@ -21,7 +18,6 @@ export interface UserData {
   height: number;
   lifestyle: string;
   goals: string;
-  avatar?: string;
 }
 
 export interface Plan {

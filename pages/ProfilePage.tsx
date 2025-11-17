@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Page from '../components/common/Page';
 import Button from '../components/common/Button';
@@ -9,16 +8,13 @@ const ProfilePage: React.FC = () => {
     const { userData, setUserData } = useAppContext();
     const { logout } = useAuth();
     
-    // Local state for editing
     const [name, setName] = useState(userData?.name || '');
     const [age, setAge] = useState(userData?.age || 0);
     const [weight, setWeight] = useState(userData?.weight || 0);
-    // FIX: Change 'healthGoal' to 'goals' to align with the UserData type.
     const [goals, setGoals] = useState(userData?.goals || '');
     
     const handleSaveChanges = () => {
         if (userData) {
-            // FIX: Save 'goals' instead of 'healthGoal'.
             setUserData({ ...userData, name, age, weight, goals });
             alert("Profile saved!");
         }
@@ -27,11 +23,9 @@ const ProfilePage: React.FC = () => {
     return (
         <Page>    
             <div className="mt-8 space-y-4">
-
                 <div>
                     <h1 className="text-xl font-bold text-gray-900"> Profile</h1>
                 </div>
-
                 <div>
                     <label className="block text-sm font-medium text-gray-700">Name</label>
                     <input type="text" value={name} onChange={e => setName(e.target.value)} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />

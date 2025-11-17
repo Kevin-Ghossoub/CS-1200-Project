@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
 import Button from '../components/common/Button';
@@ -54,7 +53,7 @@ const OnboardingPage: React.FC = () => {
                 goals: answers.goals,
             };
             setUserData(updatedUserData);
-            setPage('userInput');
+            setPage('home');
         }
     };
     

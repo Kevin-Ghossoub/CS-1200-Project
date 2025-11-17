@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Button from '../components/common/Button';
 import { ArrowLeftIcon } from '../components/icons';
@@ -10,7 +9,6 @@ const FeedbackPage: React.FC = () => {
     const [support, setSupport] = useState<'support' | 'dont_support' | null>(null);
 
     const handleSubmit = () => {
-        // Here you would typically send the feedback to a server
         console.log({ support, feedback });
         alert('Thank you for your feedback!');
         setPage('userInput');

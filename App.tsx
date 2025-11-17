@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { useAuth } from './context/AuthContext';
 import { useAppContext } from './context/AppContext';
@@ -55,8 +53,6 @@ const App: React.FC = () => {
      return <WelcomePage />;
   }
 
-  // These pages don't need the main layout with bottom nav
-  // FIX: Removed `page === 'healthTips'` as 'healthTips' is not a valid page type.
   if (page === 'aiPlan' || page === 'uploadFile' || page === 'feedback' || page === 'onboarding') {
     return <div className="h-screen w-screen bg-gray-50 flex justify-center"><div className="w-full max-w-md">{renderPage()}</div></div>
   }

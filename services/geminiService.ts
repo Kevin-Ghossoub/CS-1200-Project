@@ -1,6 +1,3 @@
-
-
-// FIX: Import Message type.
 import { GoogleGenAI } from "@google/genai";
 import { UserData, FileData, Message } from '../types';
 
@@ -11,7 +8,6 @@ if (!process.env.API_KEY) {
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 const model = 'gemini-2.5-flash';
 
-// FIX: Add getHealthAdvice function to handle chat messages.
 export const getHealthAdvice = async (prompt: string, userData: Partial<UserData>, history: Message[]): Promise<string> => {
     const systemInstruction = `You are a friendly, empathetic, and professional AI health advisor. Your goal is to provide helpful, safe, and encouraging health advice. 
 IMPORTANT: You are an AI assistant, not a medical professional. Always include a disclaimer in your responses that you cannot provide medical advice and the user should consult a healthcare provider for any medical concerns.
@@ -28,7 +24,7 @@ Here is some information about the user you are talking to:
     const contents = history.map(msg => {
         const role = msg.sender === 'user' ? 'user' : 'model';
         const textPart = { text: msg.text.replace(/<[^>]*>?/gm, '') };
-        // FIX: Explicitly type `parts` to accommodate both text and image data, preventing a TypeScript error.
+
         const parts: ({ text: string } | { inlineData: { mimeType: string, data: string } })[] = [textPart];
 
         if (msg.imageUrl) {

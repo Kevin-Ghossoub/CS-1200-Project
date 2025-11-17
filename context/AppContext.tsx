@@ -1,12 +1,9 @@
-
-
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { UserData, Plan, HistoryItem } from '../types';
 import { useAuth } from './AuthContext';
 
-type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'feedback' | 'welcome' | 'login' | 'signup' | 'onboarding' | 'forgotPassword';
+type Page = 'home' | 'insights' | 'profile' | 'userInput' | 'aiPlan' | 'uploadFile' | 'feedback' | 'welcome' | 'login' | 'signup' | 'onboarding';
 
-// FIX: Added `setActivePlan` to the context type to allow components to update the active plan.
 interface AppContextType {
   page: Page;
   setPage: (page: Page, state?: any) => void;
@@ -56,14 +53,13 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
 
   // Effect for handling navigation based on auth state and current page
   useEffect(() => {
-    const publicPages: Page[] = ['welcome', 'login', 'signup', 'forgotPassword'];
+    const publicPages: Page[] = ['welcome', 'login', 'signup'];
     if (user?.email) {
       // If user is logged in but on a page for unauthenticated users, redirect to home.
       if (publicPages.includes(page)) {
         setPageState('home');
       }
     } else {
-      // If user is not logged in, but on a protected app page, redirect to welcome.
       if (!publicPages.includes(page)) {
         if (!isFirstTimeOpening){
           setPageState('login');
@@ -108,7 +104,6 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     addHistoryItem,
     deleteHistory,
     activePlan,
-    // FIX: Added `setActivePlan` to the context value object.
     setActivePlan,
   };
 

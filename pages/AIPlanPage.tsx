@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { marked } from 'marked';
 import { useAppContext } from '../context/AppContext';
@@ -27,7 +26,6 @@ const AIPlanPage: React.FC = () => {
                 </button>
                 <h1 className="text-xl font-bold text-gray-900">Your Personalized Plan</h1>
             </header>
-
             <div className="mt-8 flex-1">
                 <div className="p-5 bg-blue-50 rounded-lg border border-blue-200">
                     <div className="flex items-center gap-2 text-sm font-semibold text-blue-700">
@@ -35,15 +33,13 @@ const AIPlanPage: React.FC = () => {
                         <span>AI-generated</span>
                     </div>
                     <div className="prose prose-sm mt-3 text-gray-800" dangerouslySetInnerHTML={parsedContent} />
-                </div>
-                
+                </div>               
                 <div className="mt-4 flex items-center gap-2">
                     {activePlan.tags.map(tag => (
                         <span key={tag} className="px-2.5 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">{tag}</span>
                     ))}
                 </div>
             </div>
-
             <div className="mt-8 space-y-3">
                 <Button fullWidth variant="secondary" onClick={() => setPage('feedback')}>Give Feedback</Button>
             </div>

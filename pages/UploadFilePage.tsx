@@ -1,5 +1,4 @@
-
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import Button from '../components/common/Button';
 import { ArrowLeftIcon, CloudArrowUpIcon } from '../components/icons';
 import { useAppContext } from '../context/AppContext';
@@ -32,13 +31,11 @@ const UploadFilePage: React.FC = () => {
             e.dataTransfer.clearData();
         }
     };
-    
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0]);
         }
     };
-
     return (
         <div className="bg-white h-full p-6 flex flex-col">
             <header className="flex items-center">
@@ -50,7 +47,6 @@ const UploadFilePage: React.FC = () => {
                  <div className="p-8 bg-blue-50 rounded-2xl">
                     <h2 className="text-xl font-bold text-gray-900">Upload Your Files</h2>
                     <p className="mt-1 text-sm text-gray-600">Drag and drop documents, images, or media.</p>
-
                     <div 
                         onDragEnter={handleDragEnter}
                         onDragLeave={handleDragLeave}
@@ -71,7 +67,6 @@ const UploadFilePage: React.FC = () => {
                             </p>
                         )}
                     </div>
-
                     <Button fullWidth className="mt-6" disabled={!file}>
                         Upload
                     </Button>
