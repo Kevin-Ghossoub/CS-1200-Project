@@ -17,6 +17,7 @@ const WelcomePage: React.FC = () => {
                     <Button fullWidth onClick={() => setPage('signup')}>Create Account</Button>
                     <Button fullWidth variant="secondary" onClick={() => setPage('login')}>Sign In</Button>
                 </div>
+                <p className="mt-2 text-lg text-gray-600">Do not trust anything this app says for any reason. It is only for entertainment purposes. By using this app you are agreeing that this app's developer and publisher and distributer, are not legaly liable for any action taken based on what this app says.</p>
             </div>
         </div>
     );
