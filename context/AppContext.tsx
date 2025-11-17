@@ -19,9 +19,11 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+var isFirstTimeOpening = true;
+
 export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { user } = useAuth();
-  const [page, setPageState] = useState<Page>('home');
+  const [page, setPageState] = useState<Page>();
   const [pageState, setPageStateObject] = useState<any>(null);
 
   const [userData, setUserDataState] = useState<UserData | null>(null);
@@ -60,7 +62,13 @@ export const AppContextProvider: React.FC<{ children: ReactNode }> = ({ children
     } else {
       // If user is not logged in, but on a protected app page, redirect to welcome.
       if (!publicPages.includes(page)) {
-        setPageState('welcome');
+        if (!isFirstTimeOpening){
+          setPageState('login');
+        }
+        else{
+          setPageState('welcome');
+          isFirstTimeOpening = false;
+        }
       }
     }
   }, [user, page]);

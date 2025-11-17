@@ -32,14 +32,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const login = async (email: string, pass: string): Promise<boolean> => {
+    setIsLoading(true);
     setError(null);
     const trimmedEmail = email.trim();
     return new Promise((resolve) => {
       setTimeout(() => {
         try {
           const storedUsers = JSON.parse(localStorage.getItem('healify_users') || '{}');
-          if (storedUsers[trimmedEmail] && storedUsers[trimmedEmail].password === pass) {
-            setIsLoading(true);
+          if (storedUsers[trimmedEmail] && storedUsers[trimmedEmail].password === pass) {           
             const currentUser = { email: trimmedEmail };
             localStorage.setItem('healify_currentUser', JSON.stringify(currentUser));
             setUser(currentUser);
@@ -51,6 +51,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         } catch (e: any) {
           setError(e.message);
           resolve(false);
+          setIsLoading(false);
         }
       }, 1000);
     });
